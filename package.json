@@ -3,11 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@types/countup.js": "^2.0.4",
+    "@types/lodash": "^4.14.171",
+    "async-validator": "^3.5.2",
     "core-js": "^3.6.5",
+    "countup.js": "^2.0.7",
+    "dayjs": "^1.10.6",
+    "lodash": "^4.17.21",
+    "mitt": "^3.0.0",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0"
