@@ -10,34 +10,6 @@ body,
   height: 100%;
 }
 
-.flex {
-  display: flex;
-}
-
-.j-center {
-  justify-content: center;
-}
-
-.j-between {
-  justify-content: space-between;
-}
-
-.j-around {
-  justify-content: space-around;
-}
-
-.j-end {
-  justify-content: flex-end;
-}
-
-.a-center {
-  align-items: center;
-}
-
-.f-wrap {
-  flex-wrap: wrap;
-}
-
 input {
   position: relative;
   display: block;
