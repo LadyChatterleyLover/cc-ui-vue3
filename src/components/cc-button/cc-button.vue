@@ -4,17 +4,24 @@
     :hover-class="hoverClassName"
     :loading="loading"
     :class="[
-    `${typeClass}`,
-    `${sizeClass}`,
-    `${isPlain}`,
-    { 'cc-button-block': block },
-    { 'cc-button-disabled': disabled },
-    { 'cc-button-round': round }]"
+      `${typeClass}`,
+      `${sizeClass}`,
+      `${isPlain}`,
+      { 'cc-button-block': block },
+      { 'cc-button-disabled': disabled },
+      { 'cc-button-round': round },
+    ]"
     :style="{ background: color, ...customColor, ...customStyle }"
     @click="handleClick"
   >
     <div class="cc-button-content">
-      <cc-icon v-if="icon" class="cc-button-icon" :color="iconColor" :type="icon" :size="iconSize"></cc-icon>
+      <cc-icon
+        v-if="icon"
+        class="cc-button-icon"
+        :color="iconColor"
+        :type="icon"
+        :size="iconSize"
+      ></cc-icon>
       <text :class="{ 'cc-button-text': icon }">
         <slot></slot>
       </text>
@@ -22,51 +29,63 @@
   </button>
 </template>
 
-<script setup lang='ts'>
-import { defineProps, defineEmits, computed, onMounted, ref, PropType } from 'vue'
+<script setup lang="ts">
+import {
+  defineProps,
+  defineEmits,
+  computed,
+  onMounted,
+  ref,
+  PropType,
+} from "vue";
 
-
-type ButtonTypeProps = '' | 'primary' | 'success' | 'error' | 'warning' | 'info'
-type ButtonSizeProps = '' | 'large' | 'small' | 'mini'
+type ButtonTypeProps =
+  | ""
+  | "primary"
+  | "success"
+  | "error"
+  | "warning"
+  | "info";
+type ButtonSizeProps = "" | "large" | "small" | "mini";
 
 interface ColorList {
-  type: string,
-  color: string
+  type: string;
+  color: string;
 }
 
 let props = defineProps({
   type: {
     type: String as PropType<ButtonTypeProps>,
-    default: ''
+    default: "",
   },
   // 是否是朴素按钮
   plain: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 圆形按钮
   round: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 块级按钮
   block: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 禁用状态
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 尺寸
   size: {
     type: String as PropType<ButtonSizeProps>,
-    default: ''
+    default: "",
   },
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   // 图标 和uni-icon一致
   icon: {
@@ -75,123 +94,123 @@ let props = defineProps({
   // 自定义颜色
   color: {
     type: String,
-    default: ''
+    default: "",
   },
   // 自定义样式
   customStyle: {
-    type: Object
+    type: Object,
   },
   // 按钮点击时的样式
   hoverClass: {
     type: String,
-  }
-})
-let emits = defineEmits(['click'])
+  },
+});
+let emits = defineEmits(["click"]);
 
 // 颜色列表
 let colorList: ColorList[] = [
   {
-    type: 'primary',
-    color: '#0081ff'
+    type: "primary",
+    color: "#0081ff",
   },
   {
-    type: 'success',
-    color: '#39b54a'
+    type: "success",
+    color: "#39b54a",
   },
   {
-    type: 'error',
-    color: '#e54d42'
+    type: "error",
+    color: "#e54d42",
   },
   {
-    type: 'warning',
-    color: '#f37b1d'
+    type: "warning",
+    color: "#f37b1d",
   },
   {
-    type: 'info',
-    color: '#909399'
+    type: "info",
+    color: "#909399",
   },
-]
+];
 
 // 是否是朴素按钮
 let isPlain = computed(() => {
-  if (props.plain) return `cc-button-${props.type}-plain`
-  else return ''
-})
+  if (props.plain) return `cc-button-${props.type}-plain`;
+  else return "";
+});
 
 // 按钮类型
 let typeClass = computed(() => {
-  if (props.type) return `cc-button-${props.type}`
-  else return ''
-})
+  if (props.type) return `cc-button-${props.type}`;
+  else return "";
+});
 
 // 尺寸
 let sizeClass = computed(() => {
-  if (props.size) return `cc-button-${props.size}`
-  else return ''
-})
+  if (props.size) return `cc-button-${props.size}`;
+  else return "";
+});
 
 // hoverclass
 let hoverClassName = computed(() => {
-  if (props.hoverClass) return props.hoverClass
+  if (props.hoverClass) return props.hoverClass;
   else {
     if (!props.plain) {
-      return `cc-button-hover`
+      return `cc-button-hover`;
     } else {
-      return `cc-button-${props.type}-hover`
+      return `cc-button-${props.type}-hover`;
     }
   }
-})
+});
 
 // 自定义颜色时的朴素状态下边框和背景颜色
-let customColor = ref()
+let customColor = ref();
 
 // 图标大小
 let iconSize = computed(() => {
-  if (props.size === 'large') {
-    return 28
-  } else if (props.size === '') {
-    return 24
-  } else if (props.size === 'small') {
-    return 20
+  if (props.size === "large") {
+    return 28;
+  } else if (props.size === "") {
+    return 24;
+  } else if (props.size === "small") {
+    return 20;
   } else {
-    return 16
+    return 16;
   }
-})
+});
 
 // 图标颜色
 let iconColor = computed(() => {
   if (props.type) {
-    if (!props.plain) return '#fff'
+    if (!props.plain) return "#fff";
     else {
-      let item = colorList.find(item => item.type === props.type)
-      return item && item.color
+      let item = colorList.find((item) => item.type === props.type);
+      return item && item.color;
     }
   } else {
-    return '#000'
+    return "#000";
   }
-})
+});
 
 let handleClick = () => {
-  emits('click')
-}
+  /** loading 状态不可点击触发click事件 */
+  if (props.loading) return;
+  emits("click");
+};
 
 onMounted(() => {
   // 自定义颜色情况
   if (props.color) {
     customColor.value = {
-      color: '#fff'
-    }
+      color: "#fff",
+    };
     if (props.plain) {
       customColor.value = {
         color: props.color,
         border: `1px solid ${props.color}`,
-        background: '#fff'
-      }
+        background: "#fff",
+      };
     }
   }
-})
-
-
+});
 </script>
 
 <style lang="scss" scoped>
@@ -212,6 +231,7 @@ onMounted(() => {
   background: #fff;
   color: #000;
   border: 1px solid #ebedf0;
+
   .cc-button-content {
     height: 100%;
     display: flex;
@@ -245,7 +265,7 @@ onMounted(() => {
   &-disabled {
     cursor: not-allowed;
     opacity: 0.5;
-    pointer-events: none;
+    // pointer-events: none;
   }
   &-round {
     border-radius: #{topx(24)};
