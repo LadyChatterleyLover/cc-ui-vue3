@@ -231,6 +231,13 @@ onMounted(() => {
   background: #fff;
   color: #000;
   border: 1px solid #ebedf0;
+   &:hover {
+    opacity: 0.75;
+    // transform: translate(1px, 1px);
+  }
+  &:active {
+    transform: translate(1px, 1px);
+  }
 
   .cc-button-content {
     height: 100%;
